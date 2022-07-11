@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view></router-view>
+    <div>资讯</div>
   </div>
 </template>
 
@@ -8,4 +8,4 @@
 export default {};
 </script>
 
-<style scoped lang="less"></style>
+<style></style>
