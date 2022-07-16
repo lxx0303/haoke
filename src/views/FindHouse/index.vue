@@ -127,11 +127,17 @@
           :desc="item.desc"
           :title="item.title"
           :thumb="'http://liufusong.top:8080' + item.houseImg"
+          @click="jumpDeatils(item)"
         >
           <template #tags>
-            <van-tag plain type="danger" text-color="#39becd">{{
-              item.tags[0]
-            }}</van-tag>
+            <van-tag
+              plain
+              type="danger"
+              text-color="#39becd"
+              v-for="value in item.tags"
+              :key="value"
+              >{{ value }}</van-tag
+            >
           </template>
         </van-card>
       </van-list>
@@ -151,6 +157,7 @@ export default {
       id: "AREA|88cff55c-aaa4-e2e0",
 
       areaList: [],
+
       isClose: false,
       rentType: [],
       rentPrice: [],
@@ -184,7 +191,6 @@ export default {
       // 区域，地铁
       data.body.area.children[0].children = [];
       this.areaList.push(data.body.area, data.body.subway);
-
       // 方式
       this.rentType = data.body.rentType;
       // console.log(this.rentType);
@@ -240,6 +246,14 @@ export default {
         if (e.value === item.value) {
           e.checked = !e.checked;
         }
+      });
+    },
+    jumpDeatils(item) {
+      this.$router.push({
+        name: "Deatils",
+        query: {
+          id: item.houseCode,
+        },
       });
     },
   },

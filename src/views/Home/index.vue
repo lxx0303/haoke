@@ -9,37 +9,40 @@
       </van-swipe-item>
     </van-swipe>
     <!-- 中间导航栏 -->
-    <!-- <van-grid :border="false" :column-num="4" class="nav">
-      <van-grid-item v-for="item in navImgs" :key="item.id">
-        <van-image :src="item.src" width="50" height="50" />
-        <p class="title">{{ item.title }}</p>
-      </van-grid-item>
-    </van-grid> -->
     <van-grid>
-      <van-grid-item icon="wap-home-o" text="整租" />
-      <van-grid-item icon="friends-o" text="合租" />
-      <van-grid-item icon="location-o" text="地图找房" />
-      <van-grid-item icon="home-o" text="去出租" />
+      <van-grid-item icon="wap-home-o" text="整租" to="/house" />
+      <van-grid-item icon="friends-o" text="合租" to="/house" />
+      <van-grid-item icon="location-o" text="地图找房" @click="onJumpMap" />
+      <van-grid-item icon="home-o" text="去出租" @click="onJumpGroent" />
     </van-grid>
     <!-- <router-view></router-view> -->
     <!-- 主体部分 -->
-    <van-grid :border="false" :column-num="2" class="house_list">
-      <van-grid-item v-for="item in areaList" :key="item.id">
-        <div class="img">
-          <van-image :src="'http://liufusong.top:8080' + item.imgSrc" />
-          <div class="text">
-            <p>{{ item.title }}</p>
-            <p>{{ item.desc }}</p>
+    <div class="main">
+      <van-cell title="租房小组" value="更多" />
+      <van-grid
+        :border="false"
+        :column-num="2"
+        class="house_list"
+        gutter="10px"
+      >
+        <van-grid-item v-for="item in areaList" :key="item.id">
+          <div class="img">
+            <van-image :src="'http://liufusong.top:8080' + item.imgSrc" />
+            <div class="text">
+              <p>{{ item.title }}</p>
+              <p>{{ item.desc }}</p>
+            </div>
           </div>
-        </div>
-      </van-grid-item>
-    </van-grid>
+        </van-grid-item>
+      </van-grid>
+    </div>
   </div>
 </template>
 
 <script>
 import Search from "@/components/Search.vue";
 import { getSwipes, getGroups } from "@/api/home";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -48,26 +51,20 @@ export default {
   data() {
     return {
       swipesImg: [],
-      // navImgs: [
-      //   { id: "001", src: require("@/assets/img-nav/1.png"), title: "整租" },
-      //   { id: "002", src: require("@/assets/img-nav/2.png"), title: "合租" },
-      //   {
-      //     id: "003",
-      //     src: require("@/assets/img-nav/3.png"),
-      //     title: "地图找房",
-      //   },
-      //   { id: "004", src: require("@/assets/img-nav/4.png"), title: "去出租" },
-      // ],
       areaList: [],
       area: "AREA%7C88cff55c-aaa4-e2e0",
     };
   },
-  mounted() {
+  computed: {
+    ...mapState(["state_city"]),
+  },
+  created() {
     this.onGroups();
     this.onSwipes();
   },
   methods: {
     async onGroups() {
+      this.area = this.state_city.value;
       const { data } = await getGroups({ area: this.area });
       // console.log(data, "data");
       this.areaList = data.body;
@@ -75,6 +72,28 @@ export default {
     async onSwipes() {
       const { data } = await getSwipes();
       this.swipesImg = data.body;
+    },
+    onJumpGroent() {
+      if (!this.$store.state.token) {
+        this.$router.push({
+          name: "Login",
+        });
+        return;
+      }
+      this.$router.push({
+        name: "goRent",
+      });
+    },
+    onJumpMap() {
+      // if (!this.$store.state.token) {
+      //   this.$router.push({
+      //     name: "Login",
+      //   });
+      //   return;
+      // }
+      this.$router.push({
+        name: "Map",
+      });
     },
   },
 };
@@ -94,6 +113,16 @@ export default {
 .nav .title {
   margin: 12px 0;
   font-size: 24px;
+}
+.main {
+  background-color: #f6f5f6;
+  overflow: hidden;
+  padding: 0 10px;
+  height: 400px;
+  .van-cell__title {
+    font-weight: 700;
+    font-size: 32px;
+  }
 }
 .house_list {
   padding: 0 10px;
@@ -121,5 +150,12 @@ export default {
   width: 100px;
   height: 100px;
   margin-right: 30px;
+}
+/deep/.van-grid-item__icon {
+  font-size: 70px;
+  color: #1cb777;
+}
+.van-cell {
+  background-color: #f6f5f6;
 }
 </style>

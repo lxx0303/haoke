@@ -11,9 +11,12 @@ export function getHotCitys() {
 }
 // 城市列表
 export function getCityList(params) {
-  return request({
-    url: "/area/city",
-    method: "get",
-    params,
-  });
+  return request(
+    {
+      url: "/area/city",
+      method: "get",
+      params,
+    },
+    true
+  );
 }

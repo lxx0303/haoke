@@ -9,7 +9,7 @@
     <!--  -->
     <template #left-icon>
       <div class="fsc">
-        <span @click="onCityName">北京</span>
+        <span @click="onCityName">{{ state_city.label }}</span>
         <van-icon class="xiajiantou" @click="onCityName" name="arrow-down" />
         <span class="line_search"></span>
         <van-icon class="sousuo" name="search" style="display: inline-block" />
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Search",
   props: {
@@ -47,6 +48,9 @@ export default {
         name: "Map",
       });
     },
+  },
+  computed: {
+    ...mapState(["state_city"]),
   },
 };
 </script>

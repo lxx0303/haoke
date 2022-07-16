@@ -11,9 +11,29 @@ export function getAreas(params) {
 
 // 房屋列表
 export function getHouseList(params) {
+  return request(
+    {
+      url: "/houses",
+      method: "get",
+      params,
+    },
+    true
+  );
+}
+
+// 去出租（小图表）/houses/params
+export function getRentIcon() {
   return request({
-    url: "/houses",
+    url: "/houses/params",
     method: "get",
-    params,
+  });
+}
+
+// 房屋详情
+export function getHouseDetails(params) {
+  //这里的params是字符串
+  return request({
+    url: `/houses/${params}`,
+    method: "get",
   });
 }

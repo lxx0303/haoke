@@ -42,8 +42,16 @@
         <!-- 页面导航 -->
         <div :class="{ pageNav: !token }">
           <van-grid clickable :column-num="3" :border="border">
-            <van-grid-item icon="star-o" text="我的收藏" />
-            <van-grid-item icon="wap-home-o" text="我的出租" />
+            <van-grid-item
+              icon="star-o"
+              text="我的收藏"
+              @click="onGoFavorite"
+            />
+            <van-grid-item
+              icon="wap-home-o"
+              text="我的出租"
+              @click="onGoMyRent"
+            />
             <van-grid-item icon="underway-o" text="看房记录" />
             <van-grid-item icon="vip-card-o" text="成为房主" />
             <van-grid-item icon="contact" text="个人资料" />
@@ -80,6 +88,28 @@ export default {
     jump() {
       this.$router.push({
         name: "Login",
+      });
+    },
+    onGoFavorite() {
+      if (!this.$store.state.token) {
+        this.$router.push({
+          name: "Login",
+        });
+        return;
+      }
+      this.$router.push({
+        name: "Favorite",
+      });
+    },
+    onGoMyRent() {
+      if (!this.$store.state.token) {
+        this.$router.push({
+          name: "Login",
+        });
+        return;
+      }
+      this.$router.push({
+        name: "MyRent",
       });
     },
     logout() {

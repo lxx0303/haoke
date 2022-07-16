@@ -2,21 +2,6 @@
   <div>
     <van-nav-bar title="城市列表" left-arrow @click-left="onClickLeft" />
     <div>
-      <!-- <van-index-bar :index-list="indexList">
-        <van-index-anchor index="#">当前城市</van-index-anchor>
-        <van-cell title="上海" />
-
-        <van-index-anchor index="热">热门城市</van-index-anchor>
-        <van-cell
-          v-for="item in hotCitys"
-          :key="item.label"
-          :title="item.label"
-        />
-        <div v-for="item in letter" :key="item">
-          <van-index-anchor index="item">{{ item }}</van-index-anchor>
-          <van-cell v-for="item in cityList" :key="item" :title="item.label" />
-        </div>
-      </van-index-bar> -->
       <!-- cityList: {
         A: [
           {label: "beijing",value: "weiyizhi"}
@@ -112,6 +97,8 @@ export default {
     },
     onChangeCity(e) {
       this.cityList["#"] = [e];
+      this.$store.commit("mutations_setcity", e);
+      this.$router.back();
       console.log(e);
     },
   },

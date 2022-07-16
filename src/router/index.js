@@ -29,18 +29,15 @@ const routes = [
             name: "CityList",
             component: () => import("@/views/CityList"),
           },
-          {
-            path: "map",
-            name: "Map",
-            component: () => import("@/views/Map"),
-          },
         ],
       },
       // 找房
       {
         path: "/house",
+        name: "FindHouse",
         component: () => import("@/views/FindHouse"),
       },
+
       // 信息
       {
         path: "/message",
@@ -69,6 +66,36 @@ const routes = [
         ],
       },
     ],
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () => import("@/views/search"),
+  },
+  {
+    path: "/favorite",
+    name: "Favorite",
+    component: () => import("@/views/My/favorites"),
+  },
+  {
+    path: "/myrent",
+    name: "MyRent",
+    component: () => import("@/views/My/myRent"),
+  },
+  {
+    path: "/gorent",
+    name: "goRent",
+    component: () => import("@/views/Home/goRent"),
+  },
+  {
+    path: "/deatils",
+    name: "Deatils",
+    component: () => import("@/views/Deatils"),
+  },
+  {
+    path: "map",
+    name: "Map",
+    component: () => import("@/views/Map"),
   },
 ];
 
