@@ -135,8 +135,12 @@
 
     <!-- 按钮 -->
     <div class="btn">
-      <van-button type="default" class="close-btn">取消</van-button>
-      <van-button type="primary" class="agree-btn">提交</van-button>
+      <van-button type="default" class="close-btn" @click="onBtn"
+        >取消</van-button
+      >
+      <van-button type="primary" class="agree-btn" @click="onBtn"
+        >提交</van-button
+      >
     </div>
   </div>
 </template>
@@ -240,6 +244,11 @@ export default {
       }
 
       console.log(this.isActive);
+    },
+    onBtn() {
+      this.$router.push({
+        name: "FindHouse",
+      });
     },
   },
   computed: {
